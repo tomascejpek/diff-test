@@ -1,6 +1,8 @@
 #!/bin/bash
 
-cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd
+cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1
+printf "Run script from $1\n"
+
 email=""
 if ! email=$(grep -Po "^email[\s]*=[\s]*\K(.*)$" "config.local"); then
   printf "Missing email\n"
