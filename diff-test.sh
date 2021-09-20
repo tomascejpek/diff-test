@@ -19,8 +19,14 @@ if [ -z $name ]; then
   exit 1
 fi
 params=$(bash ini.sh getValue params $1)
+grepParams=$(bash ini.sh getValue grep $1)
 
 curl -s -k "$url" >"$name-temp"
+if [ -n "$grepParams" ]; then
+  grep $grepParams $name-temp > $name-temp1
+  mv $name-temp1 $name-temp
+fi
+
 if [ -f "last/$name-last" ]; then
   diff=$(diff $params $name-temp last/$name-last)
   if [ "$diff" != "" ]; then
