@@ -18,13 +18,22 @@ if [ -z $name ]; then
   printf "Missing name\n"
   exit 1
 fi
+sort=$(bash ini.sh getValue sort $1)
+if [ -z "$sort" ]; then
+  sort=0
+fi
 params=$(bash ini.sh getValue params $1)
 grepParams=$(bash ini.sh getValue grep $1)
 
 curl -s -k "$url" >"$name-temp"
 if [ -n "$grepParams" ]; then
-  grep $grepParams $name-temp > $name-temp1
-  mv $name-temp1 $name-temp
+  grep $grepParams $name-temp >$name-temp1
+  if [ "$sort" == "1" ]; then
+    sort $name-temp1 >$name-temp
+    rm $name-temp1
+  else
+    mv $name-temp1 $name-temp
+  fi
 fi
 
 if [ -f "last/$name-last" ]; then

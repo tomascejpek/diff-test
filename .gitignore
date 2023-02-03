@@ -1,2 +1,3 @@
 config.local.ini
 .idea/
+*-diff-test-config/
