@@ -46,6 +46,7 @@ if [ -f "last/$name-last" ]; then
     if [ -n "$email" ]; then
       printf "$diff" | mail -s "The $name was modified" -aFrom:\<cejpek@mzk.cz\> "$email"
     fi
+    notify-send "The $name was modified"
     cp last/$name-last diff/$name-"$date"
   fi
 else
